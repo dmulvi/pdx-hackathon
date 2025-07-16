@@ -1,0 +1,21 @@
+{
+  "Policy": "Test Policy",
+  "PolicyType": "open",
+  "ForeignCalls": [],
+  "Trackers": [
+    {
+      "name": "trackerOne",
+      "type": "uint256",
+      "initialValue": 1
+    }
+  ],
+  "Rules": [
+    {
+      "condition": "value > 10000",
+      "positiveEffects": ["emit TransferSuccessful"],
+      "negativeEffects": ["revert(\"Transfer Failed\")"],
+      "callingFunction": "transfer(address to, uint256 value)",
+      "encodedValues": "address to, uint256 value"
+    }
+  ]
+}
