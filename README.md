@@ -1,10 +1,26 @@
 # PDX Hackathon - Perpin' Ain't Easy
 
-Start up the system with:
+1. copy the sample.env file
+
+```bash
+cp sample.env .env
+```
+
+2. start up local anvil chain (with price oracle, perps engine, etc pre-deployed)
 
 ```bash
 anvil --load-state anvilState-pdx.json
 ```
+
+3. check (and update) the mock price oracle
+
+```bash
+cast send $PRICE_ORACLE "getPrice()(uint256)" --private-key $PRIV_KEY
+# then check the price like so:
+cast call $PRICE_ORACLE "getPrice()(uint256)"
+```
+
+4. explore the commands below to interact with the perps contract some more
 
 You can use these commands to test out the system a bit. The `liquidatePosition` call will be reverted by the rules engine for example because the address you pass does not have an open position.
 
@@ -25,6 +41,10 @@ Now try to close a position for an account that does have one: (this isn't worki
 ```bash
 cast send $PERPS_ENGINE "liquidatePosition(address)" $USER_ADDRESS --private-key $PRIV_KEY
 ```
+
+The `liquidatePosition` function inside `/src/FortePerpsEngine.sol` is integrated with the rules engine already. If you use that test command above you will see the failure condition.
+
+---
 
 ## Already completed setup below
 
